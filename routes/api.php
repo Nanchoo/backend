@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CarouselItemsController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
@@ -16,15 +17,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+
+Route::controller(AuthController::class)->group(function () {
+    Route::post('/login',               'login')->name('user.login');
+    Route::post('/logout',              'logout')->name('user.logout');
+});
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/carousel', [CarouselItemsController::class, 'index']);
-Route::get('/carousel/{id}', [CarouselItemsController::class, 'show']);
-Route::delete('/carousel/{id}', [CarouselItemsController::class, 'destroy']);
-Route::post('/carousel', [CarouselItemsController::class, 'store']);
-Route::put('/carousel/{id}', [CarouselItemsController::class, 'update']);
+Route::controller(AuthController::class)->group(function () {
+    Route::get('/carousel',             'index');
+    Route::get('/carousel/{id}',        'show');
+    Route::delete('/carousel/{id}',     'destroy');
+    Route::post('/carousel',            'store');
+    Route::put('/carousel/{id}',        'update');
+});
+
 
 // Route::get('/user', [UserController::class, 'index']);
 // Route::get('/user/{id}', [UserController::class, 'show']);
