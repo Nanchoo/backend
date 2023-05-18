@@ -51,7 +51,8 @@ class UserRequest extends FormRequest
         else if( request ()->routeIs('user.password')){
             return [
             'password'      => 'required|confirmed|min:8',
-    ];
-}
+        ];
+    }
+
     }
 }
