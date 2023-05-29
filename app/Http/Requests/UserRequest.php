@@ -54,5 +54,10 @@ class UserRequest extends FormRequest
         ];
     }
 
-    }
+    else if( request ()->routeIs('user.image') || request ()->routeIs('profile.image')){
+        return [
+        'image'      => 'required|image|mimes:jpg,bmp,png|max:2048'
+    ];
 }
+    }
+}   
